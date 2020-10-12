@@ -20,7 +20,6 @@ public class BinarySearchTest {
 
         assertEquals(-1, BinarySearch.indexOf(items, 11));
         assertEquals(-1, BinarySearch.binarySearch(items, 11));
-
     }
 
 }
