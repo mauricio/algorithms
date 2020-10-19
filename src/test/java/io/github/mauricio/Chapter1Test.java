@@ -33,5 +33,24 @@ public class Chapter1Test {
         assertEquals(result, new String(c));
     }
 
+    @Test
+    public void testIsPermutation() {
+        assertTrue(isPermutation("dog", "god"));
+        assertTrue(isPermutation("taco bell", "lleb ocat"));
+    }
+
+    @Test
+    public void testIsPalindrome() {
+        assertTrue(isPalindrome("Tact Coa"));
+    }
+
+    @Test
+    public void testIsOneAway() {
+        assertTrue(isOneAway("pug", "pugb"));
+        assertTrue(isOneAway("inland", "finland"));
+        assertTrue(isOneAway("brazil", "brazi"));
+        assertTrue(isOneAway("bale", "pale"));
+        assertFalse(isOneAway("england", "finland"));
+    }
 
 }

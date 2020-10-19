@@ -1,12 +1,11 @@
 package io.github.mauricio;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class Chapter1 {
 
     public static boolean isUniqueHash(String s) {
-        var chars = new HashMap<Character,Boolean>();
+        var chars = new HashMap<Character, Boolean>();
 
         for (int x = 0; x < s.length(); x++) {
             var c = s.charAt(x);
@@ -64,6 +63,82 @@ public class Chapter1 {
                     characters[x + shift] = characters[x];
             }
         }
+    }
+
+    public static boolean isPermutation(String left, String right) {
+        return letterFrequency(left).equals(letterFrequency(right));
+    }
+
+    public static Map<Character, Integer> letterFrequency(String s) {
+        var result = new HashMap<Character, Integer>();
+
+        for (var c : s.toLowerCase().toCharArray()) {
+            if (Character.isLetter(c)) {
+                result.compute(c, (character, integer) -> {
+                    if (integer == null) {
+                        integer = 0;
+                    }
+
+                    return integer + 1;
+                });
+            }
+        }
+
+        return result;
+    }
+
+    public static boolean isPalindrome(String s) {
+        var odds = 0;
+
+        for (var entry : letterFrequency(s).entrySet()) {
+            if ((entry.getValue() % 2) != 0) {
+                odds++;
+            }
+
+            if (odds > 1) {
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    public static boolean isOneAway(String received, String expected) {
+        var differences = 0;
+
+        if (received.equals(expected)) {
+            return true;
+        }
+
+        if (received.length() == expected.length()) {
+            for (var x = 0; x < received.length(); x++) {
+                if (received.charAt(x) != expected.charAt(x)) {
+                    differences++;
+                }
+                if (differences > 1) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        var max = received;
+        var min = expected;
+        if (received.length() < expected.length()) {
+            max = expected;
+            min = received;
+        }
+
+        for (var x = 0; x < max.length() && differences <= 1;x++) {
+            if (x >= min.length()) {
+                differences++;
+            } else if (max.charAt(x) != min.charAt(x) && max.substring(x + 1, min.length()).equals(min.substring(x))) {
+                differences++;
+            }
+        }
+
+        return differences <= 1;
     }
 
 }
