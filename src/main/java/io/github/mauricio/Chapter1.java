@@ -141,4 +141,73 @@ public class Chapter1 {
         return differences <= 1;
     }
 
+    public static String compress(String s) {
+        if (s.length() <= 1) {
+            return s;
+        }
+
+        var builder = new StringBuilder(s.length());
+        var currentCharacter  = s.charAt(0);
+        var count = 0;
+
+        for (var x = 0; x < s.length(); x++) {
+            var l = s.charAt(x);
+            if (l == currentCharacter) {
+                count++;
+            } else {
+                builder.append(currentCharacter);
+                builder.append(count);
+                currentCharacter = l;
+                count = 1;
+            }
+        }
+
+        builder.append(currentCharacter);
+        builder.append(count);
+
+        if (builder.length() < s.length()) {
+            return builder.toString();
+        }
+
+        return s;
+    }
+
+    public static int[][] rotate90(int[][] input) {
+        var rows = input.length;
+        var columns = input[0].length;
+
+        var result = new int[columns][];
+
+        for (var x = 0; x < rows;x++) {
+            for (var y = 0; y < columns;y++) {
+                if (result[y] == null) {
+                    result[y] = new int[rows];
+                }
+                result[y][rows - 1 - x] = input[x][y];
+            }
+        }
+
+        return result;
+    }
+
+    public static void zeroMatrix(int[][] matrix) {
+        var rows = new HashSet<Integer>();
+        var columns = new HashSet<Integer>();
+
+
+        for (var x = 0; x < matrix.length; x++) {
+            var row  = matrix[x];
+            for (var y =0; y < row.length; y++) {
+                if (matrix[x][y] == 0) {
+                    rows.add(x);
+                    columns.add(y);
+                }
+            }
+            if (rows.size() == matrix.length) {
+                break;
+            }
+        }
+
+    }
+
 }
