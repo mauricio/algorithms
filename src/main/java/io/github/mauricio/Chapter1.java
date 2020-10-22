@@ -194,7 +194,6 @@ public class Chapter1 {
         var rows = new HashSet<Integer>();
         var columns = new HashSet<Integer>();
 
-
         for (var x = 0; x < matrix.length; x++) {
             var row  = matrix[x];
             for (var y =0; y < row.length; y++) {
@@ -202,12 +201,75 @@ public class Chapter1 {
                     rows.add(x);
                     columns.add(y);
                 }
+                if (columns.size() == row.length) {
+                    break;
+                }
             }
             if (rows.size() == matrix.length) {
                 break;
             }
         }
 
+        for (var column : columns) {
+            for (var row = 0; row < matrix.length; row++) {
+                if (rows.contains(row)) {
+                    Arrays.fill(matrix[row], 0);
+                } else {
+                    matrix[row][column] = 0;
+                }
+            }
+        }
+    }
+
+    static class ShiftedString {
+        private int shift;
+        private String s;
+
+        ShiftedString(String s, int shift) {
+            this.s = s;
+            this.shift = shift;
+        }
+
+        public char charAt(int index) {
+            return this.s.charAt((index + shift) % s.length());
+        }
+    }
+
+    public static boolean isRotation(String s1, String s2) {
+        if (s1.length() != s2.length() || s1.equals(s2)) {
+            return false;
+        }
+
+        var cutoff = s1.length()/2;
+        var sub = s1.substring(0, cutoff);
+        var start = s2.indexOf(sub);
+        if (start != -1 ) {
+            var shifted = new ShiftedString(s2, start);
+            for (var x = 0; x < s1.length(); x++) {
+                if (s1.charAt(x) != shifted.charAt(x)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        var shifteds1 = new ShiftedString(s1, cutoff);
+
+        for (int x = 0; x < s1.length() - cutoff; x++) {
+            var shifteds2 = new ShiftedString(s2, 1 + x);
+            var found = true;
+            for (int y = 0; y < s1.length(); y++) {
+                if (shifteds1.charAt(y) != shifteds2.charAt(y)) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

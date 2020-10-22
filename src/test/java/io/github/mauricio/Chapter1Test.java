@@ -78,4 +78,29 @@ public class Chapter1Test {
         assertTrue(Arrays.deepEquals(expected, rotate90(input)));
     }
 
+    @Test
+    public void testZeroMatrix() {
+        var input = new int[][]{
+                new int[]{1, 2, 3},
+                new int[]{4, 0, 6},
+                new int[]{7, 8, 9},
+        };
+
+        var expected = new int[][]{
+                new int[]{1, 0, 3},
+                new int[]{0, 0, 0},
+                new int[]{7, 0, 9},
+        };
+        zeroMatrix(input);
+        assertTrue(Arrays.deepEquals(expected, input));
+    }
+
+    @Test
+    public void testRotation() {
+        assertTrue(isRotation("waterbottle", "ttlewaterbo"));
+        assertTrue(isRotation("waterbottle", "erbottlewat"));
+        assertFalse(isRotation("waterbottle", "erbotulewat"));
+        assertFalse(isRotation("waterbottle", "erbottlywat"));
+    }
+
 }
